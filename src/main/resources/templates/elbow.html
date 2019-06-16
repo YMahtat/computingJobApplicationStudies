@@ -1,0 +1,98 @@
+<div th:fragment="title">
+	<h2>EXTRAIRE LE NOMBRE POTENTIEL DE CLUSTERS AVEC ELBOW :</h2>
+</div>
+
+
+<div th:fragment="content">
+	<div class="row">
+		<div style="line-height: 1.6;" class="col-md-12">
+		<h3>La methode d'ELBOW : </h3>
+		<p>
+			Consiste a surveiller l'evolution de la proportion d'inertie expliquee par la partition.<br>
+			Il faut choisir un certain nombre de clusters de sorte que l'ajout d'un autre cluster n'augmente pas la proportion d'inertie expliquee.<br>
+			On trace le pourcentage de l'inertie expliquee par les clusters en fonction du nombre de clusters.<br>
+			A un certain point, le gain marginal va baisser, donnant un angle dans le graphe.<br>
+			Le nombre de clusters est choisi a ce stade, d'ou le "critere de coude d'Elbow".<br>
+			<br><br>
+		</p>
+		<h3>La methode d'ELBOW avec le LANGAGE <b>R</b> : </h3>
+		<p style="text-align: center">
+			<span><img style="height: 60px" src="..\images\r.png"></span>&nbsp;&nbsp;
+			<button style="height: 60px" onclick="loadingAlgoELBOW();"><b> PREPARATION DE LA MATRICE & EXECUTION DU SCRIPT R </b></button>
+			<button id="btn_show" style="height: 60px" onclick="ShowAlgoELBOW();"><b> AFFICHER LE RESULTAT EXISTANT </b></button>
+			<br><br>
+			<div hidden="hidden" style="text-align: center" id="loader">
+				<canvas class="loader"></canvas>
+			</div>
+			<div id="elbow" hidden="hidden" style="text-align: center">
+				<img alt="" src="../algoScripts/myplot.png">
+			</div>
+		</p>
+			
+		</div>
+	</div>
+	<style>
+			.loader 
+			{
+			  border: 16px solid #f3f3f3;
+			  border-radius: 50%;
+			  border-top: 16px solid #008cc3;
+			  border-bottom: 16px solid #008cc3;
+			  width: 120px;
+			  height: 120px;
+			  -webkit-animation: spin 2s linear infinite;
+			  animation: spin 2s linear infinite;
+			}
+			
+			@-webkit-keyframes spin {
+			  0% { -webkit-transform: rotate(0deg); }
+			  100% { -webkit-transform: rotate(360deg); }
+			}
+			
+			@keyframes spin {
+			  0% { transform: rotate(0deg); }
+			  100% { transform: rotate(360deg); }
+			}
+	</style>
+</div>
+
+
+<div th:fragment="javascript">
+	<script type="text/javascript">
+	var exec = 0;
+	function loadingAlgoELBOW()
+	{
+		exec = 0;
+		$("#btn_show").html("<b>AFFICHER LE RESULTAT EXISTANT<b>");
+		$("#loader").removeAttr("hidden");
+		$("#elbow").attr("hidden","hidden");
+		$.ajax({
+						url:"http://localhost:8095/loadAlgoElbow", 
+						complete : function()
+						{
+							$("#loader").attr("hidden","hidden");
+							$("#elbow").removeAttr("hidden");
+							$("#btn_show").html("<b>CACHER LE RESULTAT EXISTANT<b>");
+							exec = 1;
+					    }
+				});
+	}
+
+	function ShowAlgoELBOW()
+	{
+		$("#loader").attr("hidden","hidden");
+		if(exec == 0)
+		{
+			$("#btn_show").html("<b>CACHER LE RESULTAT EXISTANT<b>");
+			$("#elbow").removeAttr("hidden");
+			exec = 1;
+		}
+		else
+		{
+			$("#btn_show").html("<b>AFFICHER LE RESULTAT EXISTANT<b>");
+			$("#elbow").attr("hidden","hidden");
+			exec = 0;
+		}
+	}
+	</script>
+</div>

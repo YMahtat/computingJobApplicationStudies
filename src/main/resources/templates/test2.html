@@ -1,0 +1,24 @@
+<div th:fragment="title">
+	<h2>TEST OPT : </h2>
+</div>
+
+
+<div th:fragment="content">
+	<table class="table">
+		<tr>
+			<th>KEY</th>
+			<th>OFFERS</th>
+			<th>JOBSEEKERS</th>
+		</tr>
+		<tr th:each="elem : ${tab}">
+	   		<td th:text="${elem.key}">key</td>
+	   		<td th:text="${elem.countOffers}">value</td>
+	   		<td th:text="${elem.countJobSeekers}">value</td>
+		</tr>
+	</table>
+</div>
+
+
+<div th:fragment="javascript">
+	
+</div>

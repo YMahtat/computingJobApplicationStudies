@@ -1,0 +1,218 @@
+<div th:fragment="title">
+	<h2>EXTRACTION DEPUIS WWW.EMPLOI.MA :<h2>
+</div>
+
+
+<div th:fragment="content">
+	<div class="row">
+		<div class="col-md-12">
+		  <div class="x_panel">
+		    <div class="x_title">
+		      <h2> OFFERS EXTRACTION  <small>MAP</small></h2>
+		      <div class="clearfix"></div>
+		    </div>
+		    <div style="width:100%;">
+		    	<canvas id="springydemo" width="1000" height="500" />
+		    </div>
+		     <div style="width:100%;text-align: center;size: 180%">
+		    	<button onclick="loading1()"> <b>LANCER L'EXTRACTION DES OFFRES DEPUIS LE SITE (www.emploi.ma)</b> </button>
+		    	<button onclick="window.location.href='/offersview'"> <b>ALLER AU "OFFERS VIEWS"</b></button>
+		    </div>
+		    <div hidden="hidden" style="text-align: center" id="loader1">
+				<canvas class="loader"></canvas>
+			</div>
+			<div id="end1" hidden="hidden" style="text-align: center">
+				EXTRACTION OFFERS ENDED WITH SUCCESS !
+			</div>
+		    
+		  </div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-12">
+		  <div class="x_panel">
+		    <div class="x_title">
+		      <h2> JOBSEEKERS (DEMANDEURS) EXTRACTION  <small>MAP</small></h2>
+		      <div class="clearfix"></div>
+		    </div>
+		    <div style="width:100%;">
+		    	<canvas id="springydemo2" width="1000" height="500" />
+		    </div>
+		     <div style="width:100%;text-align: center;size: 180%">
+		    	<button onclick="loading2()"> <b>LANCER L'EXTRACTION DES DEMANDES DEPUIS LE SITE (www.emploi.ma)</b> </button>
+		    	<button onclick="window.location.href='/jobseekersview'"> <b>ALLER AU "JOBSEEKERS VIEWS"</b></button>
+		    </div>
+		    <div hidden="hidden" style="text-align: center" id="loader2">
+				<canvas class="loader"></canvas>
+			</div>
+			<div id="end2" hidden="hidden" style="text-align: center">
+				EXTRACTION OFFERS ENDED WITH SUCCESS !
+			</div>
+		    
+		  </div>
+		</div>
+	</div>
+	
+	<style>
+			.loader 
+			{
+			  border: 16px solid #f3f3f3;
+			  border-radius: 50%;
+			  border-top: 16px solid #008cc3;
+			  border-bottom: 16px solid #008cc3;
+			  width: 120px;
+			  height: 120px;
+			  -webkit-animation: spin 2s linear infinite;
+			  animation: spin 2s linear infinite;
+			}
+			
+			@-webkit-keyframes spin {
+			  0% { -webkit-transform: rotate(0deg); }
+			  100% { -webkit-transform: rotate(360deg); }
+			}
+			
+			@keyframes spin {
+			  0% { transform: rotate(0deg); }
+			  100% { transform: rotate(360deg); }
+			}
+	</style>
+	
+</div>
+
+
+
+<div th:fragment="javascript">
+	<script src="./map/springy.js"></script>
+	<script src="./map/springyui.js"></script>
+
+	<script>
+
+		var graphJSON = {
+		  "nodes": [
+		    "Offre",
+		    "Langue",
+		    "Titre",
+		    "date d'offre",
+		    "Description Job",
+		    "Description Profil",
+		    "Niveau d'experience",
+		    "Niveau d'etudes",
+		    "Entreprise",
+		    "Description",
+		    "Nom Entreprise",
+		    "Description Entreprise",
+		    "Ville Entreprise",
+		    "Pays Entreprise",
+		    "Secteur d'activite Entreprise",
+		    "Exigences",
+		    "Type de contrat",
+		    "Site web"
+		
+		  ],
+		  "edges": [
+		    ["Offre", "Langue",{color: '#00A0B0', label: 'Exigences langue'}],
+		    ["Offre", "Titre"],
+		    ["Offre", "date d'offre"],
+		    ["Offre", "Description Job"],
+		    ["Offre", "Description Profil"],
+		    ["Offre", "Niveau d'experience"],
+		    ["Offre", "Niveau d'etudes"],
+		    ["Offre", "Entreprise",{color: '#00A0B0', label: "Information d'entreprise"}],
+		    ["Offre", "Description"],
+		       ["Offre", "Type de contrat"],
+		       ["Entreprise", "Nom Entreprise",{color: 'red'}],
+		       ["Entreprise", "Description Entreprise",{color: 'red'}],
+		       ["Entreprise", "Ville Entreprise",{color: 'red'}],
+		       ["Entreprise", "Pays Entreprise",{color: 'red'}],
+		       ["Entreprise", "Secteur d'activite Entreprise",{color: 'red'}],
+		       ["Entreprise", "Site web",{color: 'red'}],
+		       ["Langue", "Exigences",{color: 'red'}]
+		
+		    
+		  ]
+		};
+		
+		
+		jQuery(function(){
+		  var graph = new Springy.Graph();
+		  graph.loadJSON(graphJSON);
+		
+		  var springy = jQuery('#springydemo').springy({
+		    graph: graph
+		  });
+		});
+		
+		
+		var graphJSON2 = {
+				  "nodes": [
+				    "Demandeur",
+				    "Niveau d'etude",
+				    "Experiences",
+				    "Disponibilite",
+				    "Competences",
+				    "Ville",
+				    "Metier",
+				    "Connaissance",
+				   	"Etablissement",
+				   	"Description",
+				   	"Date debut",
+				   	"Date fin",
+				   	"Contrat",
+				   	"Langue",
+				   	"Exigences"
+		
+				  ],
+				  "edges": [
+				   ["Demandeur", "Langue",{color: '#00A0B0', label: 'Exigences langue'}],
+				   ["Demandeur", "Connaissance",{color: '#00A0B0', label: 'Connaissance'}],
+				   ["Demandeur", "Experiences"],
+				   ["Demandeur", "Niveau d'etude"],
+				   ["Demandeur", "Disponibilite"],
+				   ["Demandeur", "Competences"],
+				   ["Demandeur", "Ville"],
+				   ["Demandeur", "Metier"],
+				   ["Demandeur", "Contrat"],
+				   ["Connaissance", "Etablissement",{color: 'red'}],
+				   ["Connaissance", "Description",{color: 'red'}],
+				   ["Connaissance", "Date debut",{color: 'red'}],
+				   ["Connaissance", "Date fin",{color: 'red'}],
+				   ["Langue", "Exigences",{color: 'red'}],
+				  ]
+				};
+		
+		
+				jQuery(function(){
+				  var graph = new Springy.Graph();
+				  graph.loadJSON(graphJSON2);
+		
+				  var springy = jQuery('#springydemo2').springy({
+				    graph: graph
+				  });
+				});
+
+
+
+
+				function loading1()
+				{
+					$("#loader1").removeAttr("hidden");
+					$.ajax({
+									url:"http://localhost:8095/loadAlgoExtraction"
+							});
+				}
+
+				function loading2()
+				{
+					$("#loader2").removeAttr("hidden");
+					$.ajax({
+									url:"http://localhost:8095/loadAlgoExtraction"
+							});
+				}
+
+
+
+
+							
+	</script>
+</div>

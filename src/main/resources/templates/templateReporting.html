@@ -1,0 +1,17 @@
+<div th:fragment="title">
+	<h2>MICROSOFT BI - SSRS REPORTING - <b th:text="${reportTitle}">text</b> :</h2>
+</div>
+
+
+<div th:fragment="content">
+	<div class="row">
+		<iframe id="reportFrame" style="min-height:575px;overflow:hidden;height:100%;width:100%; line-height: 1.5;" height="700px" width="auto" th:src="${ReportURL}"></iframe>
+	</div>
+</div>
+
+
+<div th:fragment="javascript">
+	<script type="text/javascript">
+	
+	</script>
+</div>

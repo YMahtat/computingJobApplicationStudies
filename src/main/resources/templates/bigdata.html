@@ -1,0 +1,119 @@
+<div th:fragment="title">
+	<h2>ENTREPOT BigDATA (Cloudera HADOOP) : </h2>
+</div>
+
+
+<div th:fragment="content">
+	<div class="row">
+		<div class="col-md-12">
+		  <div class="x_panel">
+			    <div class="x_title">
+			      <h2> BigDATA Hadoop  <small>PROCESSING</small></h2>
+			      <div class="clearfix"></div>
+			    </div>
+			    
+			    <div style="width:100%;text-align: center">
+			    	<img id="bigDataImg" src="../images/BigDATA.png" />
+			    </div>
+			    <br>
+			    <div style="width:100%;" class="col-md-12">
+			    	<div class="col-md-1"></div>
+			    	<div class="col-md-10">
+			    		<p style="text-align: left;font-size:130%" >
+			    			Charger les donnees des offres et demandes extraites (<b>depuis www.emploi.ma</b>), 
+			    			le <b>DataWareHouse</b> et les resultats des statistiques (<b>reports MS SSRS et les resultats du Text-Mining</b>)
+			    			actuelles dans l'Entrepot BigDATA (<b>HADOOP</b>) :
+			    		</p>
+			    	</div>
+			    	<div class="col-md-1"></div>
+			    </div>
+			    
+			    <div style="width:100%;text-align: center;size: 180%;font-size: 120%">
+				    	<button onclick="loading()"> LANCER LE CHARGEMENT DES DONNEES ACTUELLES DANS L'<b>ENTREPOT BIGDATA (HADOOP)</b> </button>
+				</div>
+				<div hidden="hidden" style="text-align: center" id="loader">
+						<canvas class="loader"></canvas>
+				</div>
+				<div hidden="hidden" style="text-align: center;color: red" id="result_fail">
+						
+				</div>
+				
+				<div hidden="hidden" style="text-align: center; color green" id="result_success">
+						X
+				</div>
+				
+			</div>
+		    
+		  </div>
+		  
+	</div>
+	
+	
+	<style>
+			.loader 
+			{
+			  border: 16px solid #f3f3f3;
+			  border-radius: 50%;
+			  border-top: 16px solid #008cc3;
+			  border-bottom: 16px solid #008cc3;
+			  width: 120px;
+			  height: 120px;
+			  -webkit-animation: spin 2s linear infinite;
+			  animation: spin 2s linear infinite;
+			}
+			
+			@-webkit-keyframes spin {
+			  0% { -webkit-transform: rotate(0deg); }
+			  100% { -webkit-transform: rotate(360deg); }
+			}
+			
+			@keyframes spin {
+			  0% { transform: rotate(0deg); }
+			  100% { transform: rotate(360deg); }
+			}
+	</style>
+	
+</div>
+
+
+<div th:fragment="javascript">
+	<script type="text/javascript">
+		function loading()
+		{
+			$.ajaxSetup({async:false});
+			var response = 0;
+			$("#loader").removeAttr("hidden");
+			$("#result_fail").attr("hidden","hidden");
+			$("#result_success").attr("hidden","hidden");
+			
+			setTimeout(loadHDFS(), 250);
+		}
+
+		function loadHDFS()
+		{
+			$.ajaxSetup({async:false});
+			$.get("http://localhost:8095/loadbigdataprocess", function(data, status)
+			{
+	            response = data;
+	        });
+			check();
+	        if(reponse = 1)
+		    {
+	        	$("#result_fail").removeAttr("hidden");
+	        	$("#result_fail").text("FAIL CONNECTIONG TO HADOOP NameNode Server !!");
+	        	$("#loader").attr("hidden","hidden");
+			}
+
+	        if(reponse = 0)
+		    {
+	        	
+	        	$("#result_success").removeAttr("hidden");
+	        	$("#result_success").text("Files Written to HADOOP HDFS successfully!");
+	        	$("#loader").attr("hidden","hidden");
+			}
+		} 
+
+
+		
+	</script>
+</div>

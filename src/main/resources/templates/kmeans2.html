@@ -1,0 +1,231 @@
+<div th:fragment="title">
+	<h2>TENDANCES CENTRALES - TEXT MINING - KMEANS RESULT : </h2>
+</div>
+
+
+<div th:fragment="content">
+<!-- 	<table class="table">
+		<tr>
+			<th>KEY</th>
+			<th>VALUE</th>
+		</tr>
+		
+		tr th:each="elem : ${tab}">
+			<td th:text="${elem.toString()}">key</td>
+	   		
+	   		
+		</tr
+	</table> -->
+	<div class="row">
+		<div class="col-md-12">
+		  <div class="x_panel">
+		    <div class="x_title">
+		      <h2> RESULTATS DES BAGS DES MOTS :  <small>DISTRIBUTION</small></h2>
+		      <div class="clearfix"></div>
+		    </div>
+		    <div class="col-sm-12">
+		    		
+				<div class="clearfix"></div>
+				<form action="/kmeans" method="get">
+		    	<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12"> SELECTIONNER CLUSTER : </label>  	
+					<div class="col-md-2 col-sm-2 col-xs-12">
+						<select class="form-control" style="text-align: center" id="clust" name="bag" >
+							<option style="width: 85%;font-size: 105%" value="1"> 1 </option>
+							<option style="width: 85%;font-size: 105%" value="2"> 2 </option>
+							<option style="width: 85%;font-size: 105%" value="3"> 3 </option>
+							<option style="width: 85%;font-size: 105%" value="4"> 4 </option>
+							<option style="width: 85%;font-size: 105%" value="5"> 5 </option>
+						</select>
+						<input type="hidden" class="form-control col-md-4 col-xs-4" value="1" name="elbownbr">
+						<div hidden="hidden" class="form-group has-error"  id="msg"><label class="control-label" for="inputError1">IL FAUT SPECIFIER UN ENTIER POSITIF !!</label></div>
+					</div>
+					
+					<div class="col-md-3 col-sm-3 col-xs-12">
+						<button onclick="loadingAlgoELBOW()" style="width: 85%;font-size: 105%" id="btn" type="submit" class="btn btn-success"><b>ENVOYER</b></button>
+					</div>
+		    </form>
+		    </div>
+		    <div hidden="hidden" style="text-align: center" id="loader">
+						<canvas class="loader"></canvas>
+			</div>
+			
+		     
+		  </div>
+		  <div style="margin: 0;padding: 0;" class="col-sm-12">  	
+				<div style="margin: 0;padding: 0;" id="vis"></div>  
+		    </div>
+		</div>
+	</div>
+	
+	<style>
+			.loader 
+			{
+			  border: 16px solid #f3f3f3;
+			  border-radius: 50%;
+			  border-top: 16px solid #008cc3;
+			  border-bottom: 16px solid #008cc3;
+			  width: 120px;
+			  height: 120px;
+			  -webkit-animation: spin 2s linear infinite;
+			  animation: spin 2s linear infinite;
+			}
+			
+			@-webkit-keyframes spin {
+			  0% { -webkit-transform: rotate(0deg); }
+			  100% { -webkit-transform: rotate(360deg); }
+			}
+			
+			@keyframes spin {
+			  0% { transform: rotate(0deg); }
+			  100% { transform: rotate(360deg); }
+			}
+	</style>
+       							
+        
+</div>
+
+
+<div th:fragment="javascript">
+	 
+	 <script th:inline="javascript">
+
+	 function loadingAlgoELBOW()
+	{
+		$("#loader").removeAttr("hidden");
+	}
+
+	 /*<![CDATA[*/
+     var ctx = document.getElementById("OfferChart");
+	  var dat= /*[[${nbrContrta}]]*/;
+	  var lab= /*[[${Contrat}]]*/;
+	 
+	 
+     var myChart = new Chart(ctx, {
+         type: 'radar',
+         data: {
+             labels:lab,
+             datasets: [{
+                 label: '# of Votes',
+                 data: dat,
+                 backgroundColor: [
+                     'rgba(255, 99, 132, 0.2)'
+                 ],
+                 borderColor: [
+                     'rgba(255,99,132,1)',
+                 ],
+                 borderWidth: 1
+             }]
+         },
+         options: {
+             scales: {
+                 yAxes: [{
+                     ticks: {
+                         beginAtZero:true
+                     }
+                 }]
+             }
+         }
+     });
+  	/*]]>*/
+	
+	</script>
+
+
+		 <script th:inline="javascript">
+	 /*<![CDATA[*/
+          var ctx = document.getElementById("OfferActivityChart");
+		  var dat= /*[[${listactivitycount}]]*/;
+		  var lab= /*[[${listactivityname}]]*/;
+		 
+		 
+          var myChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                  labels:lab,
+                  datasets: [{
+                      label: 'Nombre d\'offre',
+                      data: dat,
+                      backgroundColor: [
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)'
+                         
+                      ],
+                      borderColor: [
+
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72,)',
+                          'rgba(72, 54, 72)'
+                      ],
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true
+                          }
+                      }]
+                  }
+              }
+          });
+        	  /*]]>*/
+		</script>
+		
+		
+ <script th:inline="javascript">
+	 /*<![CDATA[*/
+		var dat= /*[[${listLangageReqCount}]]*/;
+		var lab= /*[[${listLangageReq}]]*/;
+		var data = {
+			    datasets: [{
+			        data: dat,
+			        backgroundColor: [
+			            "#FF6384",
+			            "#4BC0C0",
+			            "#FFCE56",
+			            "#E7E9ED",
+			            "#36A2EB"
+			        ],
+			        label: 'My dataset' // for legend
+			    }],
+			    labels: lab
+			};
+			var ctx = $("#chart-area");
+			new Chart(ctx, {
+			    data: data,
+			    type: 'polarArea'
+			});
+		/*]]>*/
+		</script>
+		
+		
+		<!-- <script src="https://d3js.org/d3.v3.min.js"></script> -->
+		<script type="text/javascript" src="../wordCloud/d3.v3.min.js"></script>
+        <script type="text/javascript" src="../wordCloud/d3-cloud/d3.layout.cloud.js"></script>
+    	<script th:inline="javascript">
+		 		/*<![CDATA[*/
+		 			var tags =/*[[${tab}]]*/;
+		 			
+	            /*]]>*/
+        </script>
+        <script type="text/javascript" src="../wordCloud/d3cloud.js"></script>
+        <script type="text/javascript" src="../wordCloud/word-cloud.js"></script>
+		
+		
+</div>

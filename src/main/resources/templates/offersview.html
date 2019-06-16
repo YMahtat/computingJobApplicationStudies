@@ -1,0 +1,208 @@
+<div th:fragment="title">
+	<h2>VIEW SUR LES STATISTIQUES DES OFFRES D'EMPLOI : </h2>
+</div>
+
+
+<div th:fragment="content">
+	<div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>EXTRACTION DES OFFRES <small>OVERVIEW</small></h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="col-md-12">
+		                  <div class="col-sm-8">
+		                  	<canvas onload="grapheLoad()" id="OfferChart" width="400" height="200"></canvas>	
+		                  </div>
+		                  <div class="col-sm-4">
+		                        <div class="x_title">
+		                          <h2>LAST OFFERS</h2>
+		                          <ul class="nav navbar-right panel_toolbox">
+		                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+		                            </li>
+		                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+		                            </li>
+		                          </ul>
+		                          <div class="clearfix"></div>
+		                        </div>
+		                        <ul class="list-unstyled top_profiles scroll-view">
+		                        <th:block th:each="offer : ${listoffer}">
+		                          <li class="media event">
+		                            <a class="pull-left border-aero profile_thumb">
+		                              <i class="fa fa-user aero"></i>
+		                            </a>
+		                            <div class="media-body">
+		                             <p class="title" th:text="${offer.getEnterprise().getName()}"></p>
+		                              <p ><strong th:text="${offer.getOfferDate()}"> </strong><p th:text="${offer.getTitle()}"> </p>
+		                              <p> <small th:text="${offer.getLevelStudy()}">12 Sales Today</small>
+		                              </p>
+		                            </div>
+		                          </li>
+		                       	</th:block>	
+		                        </ul>
+		                      </div>
+		                  </div>
+		                 <div class="col-md-12">
+		                 <div >
+								<h2>Nombre d'offre pour les secteurs les plus dominants</h2>
+							</div>
+		               		 
+		               			<div class="col-sm-12">  	
+		               				<canvas onload="grapheLoad()" id="OfferActivityChart" width="400" height="200"></canvas>	
+		          				</div>
+		          		   </div>
+		                  <div class="col-md-12">
+		                 <div >
+								<h2>Nombre d'offre pour chaque langue</h2>
+							</div>
+		              		<div class="col-sm-12">  	
+		          					<canvas id="chart-area"></canvas>
+		          				</div>
+		          			  <div >
+								<h2>Les metiers dominants dans les entreprises</h2>
+							</div>
+		          				<div class="col-sm-12">  	
+		          				  	<div id="vis" style="width:200px, height:200px;"></div>  
+		          				  </div>
+		                 </div>        
+                </div>
+              </div>
+           </div>
+</div>
+<div th:fragment="javascript">
+	 
+	 <script th:inline="javascript">
+	 /*<![CDATA[*/
+          var ctx = document.getElementById("OfferChart");
+		  var dat= /*[[${nbrContrta}]]*/;
+		  var lab= /*[[${Contrat}]]*/;
+		 
+		 
+          var myChart = new Chart(ctx, {
+              type: 'radar',
+              data: {
+                  labels:lab,
+                  datasets: [{
+                      label: '# of Votes',
+                      data: dat,
+                      backgroundColor: [
+                          'rgba(255, 99, 132, 0.2)'
+                      ],
+                      borderColor: [
+                          'rgba(255,99,132,1)',
+                      ],
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true
+                          }
+                      }]
+                  }
+              }
+          });
+       	/*]]>*/
+		</script>
+
+
+		 <script th:inline="javascript">
+	 /*<![CDATA[*/
+          var ctx = document.getElementById("OfferActivityChart");
+		  var dat= /*[[${listactivitycount}]]*/;
+		  var lab= /*[[${listactivityname}]]*/;
+		 
+		 
+          var myChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                  labels:lab,
+                  datasets: [{
+                      label: 'Nombre d\'offre',
+                      data: dat,
+                      backgroundColor: [
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)'
+                         
+                      ],
+                      borderColor: [
+
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72,)',
+                          'rgba(72, 54, 72)'
+                      ],
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true
+                          }
+                      }]
+                  }
+              }
+          });
+        	  /*]]>*/
+		</script>
+		
+		
+ <script th:inline="javascript">
+	 /*<![CDATA[*/
+		var dat= /*[[${listLangageReqCount}]]*/;
+		var lab= /*[[${listLangageReq}]]*/;
+		var data = {
+			    datasets: [{
+			        data: dat,
+			        backgroundColor: [
+			            "#FF6384",
+			            "#4BC0C0",
+			            "#FFCE56",
+			            "#E7E9ED",
+			            "#36A2EB"
+			        ],
+			        label: 'My dataset' // for legend
+			    }],
+			    labels: lab
+			};
+			var ctx = $("#chart-area");
+			new Chart(ctx, {
+			    data: data,
+			    type: 'polarArea'
+			});
+		/*]]>*/
+		</script>
+		
+		
+		<script src="https://d3js.org/d3.v3.min.js"></script>
+        <script type="text/javascript" src="../wordCloud/d3-cloud/d3.layout.cloud.js"></script>
+    	    <script th:inline="javascript">
+		 		/*<![CDATA[*/
+		 			var tags =/*[[${listJs}]]*/;
+	           	 
+	            /*]]>*/
+        </script>
+        <script type="text/javascript" src="../wordCloud/d3cloud.js"></script>
+        <script type="text/javascript" src="../wordCloud/word-cloud.js"></script>
+		
+		
+</div>

@@ -1,0 +1,90 @@
+<div th:fragment="title">
+	<h2>TENDANCES CENTRALES - TEXT MINING - KMEANS RESULT : </h2>
+</div>
+
+
+<div th:fragment="content">
+
+	<div class="row">
+		<div class="col-md-12">
+		  <div class="x_panel">
+		    <div class="x_title">
+		      <h2> CHOISIR LE NOMBRE DE CLUSTER (SELON LE GRAPHE DU COUDE D'ELBOW) :   <small>MENU</small></h2>
+		      <div class="clearfix"></div>
+		    </div>
+		    <form action="/kmeans" method="get">
+		    	<div class="form-group">
+					<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12"> NOMBRE DE CLUSTERS : </label>
+  					<div class="col-md-4 col-sm-4 col-xs-12">
+						<input onchange="verify(this.value)" id="elbow" class="form-control col-md-4 col-xs-4" type="number" value="5" name="elbownbr" required="required">&nbsp; &nbsp;
+						<input type="hidden" class="form-control col-md-4 col-xs-4" value="1" name="bag">
+						<div hidden="hidden"   class="form-group has-error"  id="msg"><label class="control-label" for="inputError1">IL FAUT SPECIFIER UN ENTIER POSITIF !!</label></div>
+					</div>
+					<div class="col-md-5 col-sm-5 col-xs-12">
+						<button onclick="loadingAlgoELBOW()" style="width: 85%;font-size: 105%" id="btn" type="submit" class="btn btn-success"><b>ENVOYER</b></button>
+					</div>
+				</div>
+		    </form>
+			
+		     
+		  </div>
+		 <div hidden="hidden" style="text-align: center" id="loader">
+						<canvas class="loader"></canvas>
+		</div>
+		</div>
+	</div>
+		<style>
+			.loader 
+			{
+			  border: 16px solid #f3f3f3;
+			  border-radius: 50%;
+			  border-top: 16px solid #008cc3;
+			  border-bottom: 16px solid #008cc3;
+			  width: 120px;
+			  height: 120px;
+			  -webkit-animation: spin 2s linear infinite;
+			  animation: spin 2s linear infinite;
+			}
+			
+			@-webkit-keyframes spin {
+			  0% { -webkit-transform: rotate(0deg); }
+			  100% { -webkit-transform: rotate(360deg); }
+			}
+			
+			@keyframes spin {
+			  0% { transform: rotate(0deg); }
+			  100% { transform: rotate(360deg); }
+			}
+	</style>
+</div>
+
+
+<div th:fragment="javascript">
+	<script type="text/javascript">
+
+	 	function loadingAlgoELBOW()
+		{
+			$("#loader").removeAttr("hidden");
+		}
+		function verify(val)
+		{
+			if(isInt(val) && val > 0)
+			{
+				$("#msg").attr("hidden","hidden");
+				$("#btn").removeAttr("disabled");
+			}
+			else
+			{
+				$("#msg").removeAttr("hidden");
+				$("#btn").attr("disabled","disabled");
+			}
+		}
+
+		function isInt(value) 
+		{
+			  return !isNaN(value) && 
+			         parseInt(Number(value)) == value && 
+			         !isNaN(parseInt(value, 10));
+		}
+	</script>
+</div>

@@ -1,0 +1,91 @@
+<div th:fragment="title">
+	<h2>VIEW SUR LES STATISTIQUES DES ENTREPRISES CONCERNEE PAE LES OFFRES : </h2>
+</div>
+
+
+<div th:fragment="content">
+	<div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h4> DISTRIBUTION DES OFFRES ET DEMANDES PAR LES VILLES DES ENTREPRISES <small>GRAPHE</small> : </h4>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="col-md-12">
+		                  <canvas onload="grapheLoad()" id="JobSeekerChart" width="400" height="200"></canvas>	
+		                 </div>        
+                </div>
+              </div>
+           </div>
+</div>
+<div th:fragment="javascript">
+	 
+	 <script th:inline="javascript">
+	 /*<![CDATA[*/
+         
+          var ctx = document.getElementById("JobSeekerChart");
+		  var dat1= /*[[${nbrEntr}]]*/;
+		  var dat2= /*[[${nbrJs}]]*/;
+		  var dat3= /*[[${nbrOffer}]]*/;
+		  var lab= /*[[${lab}]]*/;
+		 
+		 
+          var myChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels:lab,
+                  datasets: [{
+                      label: 'Nombre d\'entreprise',
+                      data: dat1,
+                      backgroundColor: [
+                          '#73879c94'
+                      ],
+                      borderColor: [
+                          '#73879c',
+                      ],
+                      borderWidth: 1
+                  },
+                  {
+                      label: 'Nombre de demande',
+                      data: dat2,
+                      backgroundColor: [
+                          '#3498db9c'
+                      ],
+                      borderColor: [
+                          '#3498db',
+                      ],
+                      borderWidth: 1
+                  },
+                  {
+                      label: 'Nombre d\'offre',
+                      data: dat3,
+                      backgroundColor: [
+                          '#26b99a87'
+                      ],
+                      borderColor: [
+                          '#26b99a',
+                      ],
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true
+                          }
+                      }]
+                  }
+              }
+          });
+        	  /*]]>*/
+		</script>
+
+		<script src="https://d3js.org/d3.v3.min.js"></script>
+        <script type="text/javascript" src="../wordCloud/d3-cloud/d3.layout.cloud.js"></script>
+
+        <script type="text/javascript" src="../wordCloud/d3cloud.js"></script>
+        <script type="text/javascript" src="../wordCloud/word-cloud.js"></script>
+		
+		
+</div>

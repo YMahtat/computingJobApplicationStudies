@@ -1,0 +1,211 @@
+<div th:fragment="title">
+	<h2>VIEW SUR LES STATISTIQUES DES DEMANDES D'EMPLOI : </h2>
+</div>
+
+
+<div th:fragment="content">
+	<div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>EXTRACTION DES DEMANDES <small>OVERVIEW</small></h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="col-md-12">
+		                  <div class="col-sm-6">
+		                  	<canvas onload="grapheLoad()" id="JobSeekerChart" width="400" height="200"></canvas>	
+		                  </div>
+		                  <div class="col-sm-6">
+		                  	<canvas onload="grapheLoad()" id="JobSeekerLevelChart" width="400" height="200"></canvas>	
+		                  </div>
+		                  
+		                  </div>
+		                 <div class="col-md-12">
+		                 <div >
+								<h2>Nombre de demande pour les secteurs les plus dominants</h2>
+						</div>
+		               		 
+		               			<div class="col-sm-12">  	
+		               				<canvas onload="grapheLoad()" id="JobssekerXpActivityChart" width="400" height="200"></canvas>	
+		          				</div>
+		          		 
+		               		
+		                 </div>
+		                  <div class="col-md-12">
+		                 <div >
+								<h2>Nombre de demande pour chaque langue</h2>
+							</div>
+		               		 
+		              
+		          				<div class="col-sm-8">  	
+		          					<canvas id="chart-area"></canvas>
+		          				</div>  
+		               		
+		                 </div>        
+                </div>
+              </div>
+           </div>
+</div>
+<div th:fragment="javascript">
+	 
+	 <script th:inline="javascript">
+	 /*<![CDATA[*/
+          var ctx = document.getElementById("JobSeekerChart");
+		  var dat= /*[[${nbrContrta}]]*/;
+		  var lab= /*[[${Contrat}]]*/;
+		 
+		 
+          var myChart = new Chart(ctx, {
+              type: 'radar',
+              data: {
+                  labels:lab,
+                  datasets: [{
+                      label: 'Demande par contrat',
+                      data: dat,
+                      backgroundColor: [
+                          'rgba(255, 99, 132)'
+                      ],
+                      borderColor: [
+                          'rgba(255,99,132,1)',
+                      ],
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true
+                          }
+                      }]
+                  }
+              }
+          });
+        	  /*]]>*/
+		</script>
+		
+		
+		 <script th:inline="javascript">
+	 /*<![CDATA[*/
+          var ctx = document.getElementById("JobSeekerLevelChart");
+		  var dat= /*[[${NbrLevel}]]*/;
+		  var lab= /*[[${Level}]]*/;
+		 
+		 
+          var myChart = new Chart(ctx, {
+              type: 'radar',
+              data: {
+                  labels:lab,
+                  datasets: [{
+                      label: 'Demande par niveau d\'etude',
+                      data: dat,
+                      backgroundColor: [
+                          '#73879C'
+                      ],
+                      borderColor: [
+                          '#73879C',
+                      ],
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true
+                          }
+                      }]
+                  }
+              }
+          });
+        	  /*]]>*/
+		</script>
+
+
+		 <script th:inline="javascript">
+	 /*<![CDATA[*/
+          var ctx = document.getElementById("JobssekerXpActivityChart");
+		  var dat= /*[[${listactivitycount}]]*/;
+		  var lab= /*[[${listactivityname}]]*/;
+		 
+		 
+          var myChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                  labels:lab,
+                  datasets: [{
+                      label: 'Nombre de demande',
+                      data: dat,
+                      backgroundColor: [
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)',
+                          'rgba(72, 54, 72, 0.2)'
+                         
+                      ],
+                      borderColor: [
+
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)',
+                          'rgba(72, 54, 72)'
+                      ],
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true
+                          }
+                      }]
+                  }
+              }
+          });
+        	  /*]]>*/
+		</script>
+		
+		
+ <script th:inline="javascript">
+	 /*<![CDATA[*/
+		var dat= /*[[${listLangageCount}]]*/;
+		var lab= /*[[${listLangage}]]*/;
+		var data = {
+			    datasets: [{
+			        data: dat,
+			        backgroundColor: [
+			            "#FF6384",
+			            "#4BC0C0",
+			            "#FFCE56",
+			            "#E7E9ED",
+			            "#36A2EB"
+			        ],
+			        label: 'My dataset' // for legend
+			    }],
+			    labels: lab
+			};
+			var ctx = $("#chart-area");
+			new Chart(ctx, {
+			    data: data,
+			    type: 'polarArea'
+			});
+		/*]]>*/
+		</script>
+		
+		
+		
+</div>
